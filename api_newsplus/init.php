@@ -9,6 +9,10 @@ class Api_newsplus extends Plugin {
 	private $host;
 	private $dbh;
 
+	function _construct() {
+            $this->dbh = DB::pdo();
+	}
+
 	/**
 	 * Plugin interface: about.
 	 */
@@ -20,7 +24,7 @@ class Api_newsplus extends Plugin {
 			, "http://github.com/hrk/tt-rss-newsplus-plugin/"
 			);
 	}
-	
+
 	/**
 	 * Plugin interface.
 	 */
@@ -33,7 +37,6 @@ class Api_newsplus extends Plugin {
 	 */
 	function init($host) {
 		$this->host = $host;
-		$this->dbh = $host->get_dbh();
 
 		$this->host->add_api_method("getCompactHeadlines", $this);
 	}
@@ -100,7 +103,7 @@ class Api_newsplus extends Plugin {
 		}
 
 		$view_query_part = "";
-		
+
 		if ($view_mode == "adaptive") {
 			if ($feed != -1) {
 				$unread = getFeedUnread($feed, false);
