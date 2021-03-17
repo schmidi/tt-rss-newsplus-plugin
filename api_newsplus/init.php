@@ -39,13 +39,13 @@ class Api_newsplus extends Plugin {
 	 * Our own API.
 	 */
 	function getCompactHeadlines() {
-		$feed_id = clean($_REQUEST["feed_id"]);
+		$feed_id = clean($_REQUEST['feed_id']);
 		if ($feed_id != "") {
-			$limit = (int) clean($_REQUEST["limit"] ?? 20);
-			$offset = (int) clean($_REQUEST["skip"] ?? 0);
+			$limit = (int) clean($_REQUEST['limit'] ?? 20);
+			$offset = (int) clean($_REQUEST['skip'] ?? 0);
 			/* all_articles, unread, adaptive, marked, updated */
-			$view_mode = clean($_REQUEST["view_mode"] ?? "all_articles");
-			$since_id = (int) clean($_REQUEST["since_id"] ?? 0);
+			$view_mode = clean($_REQUEST['view_mode'] ?? "all_articles");
+			$since_id = (int) clean($_REQUEST['since_id'] ?? 0);
 
 			/* */
 			$headlines = $this->buildHeadlinesArray($feed_id, $limit, $offset, $view_mode, $since_id);
@@ -222,7 +222,9 @@ class Api_newsplus extends Plugin {
 				$query_strategy_part ORDER BY $order_by
 				$limit_query_part $offset_query_part";
 
-			if ($_REQUEST["debug"]) print $query;
+			if (isset($_REQUEST['debug'])) {
+				print $query;
+			}
 
 			$result = $this->pdo->query($query);
 
